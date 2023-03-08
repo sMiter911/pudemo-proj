@@ -18,6 +18,9 @@ export class AccountComponent implements OnInit {
   loading = false;
   profile!: Profile;
   countries: any;
+  branches: any;
+  selectedStructure: any;
+  structures: any;
   dialingCode: any;
   countryExtension: any;
   newMember: any;
@@ -66,6 +69,8 @@ export class AccountComponent implements OnInit {
     }
     await this.getProfile();
     await this.getCountries();
+    await this.getBranches();
+    await this.getStructures();
     await this.getDialingCode();
     await this.createMembershipNumber();
 
@@ -215,6 +220,20 @@ export class AccountComponent implements OnInit {
   async getDialingCode() {
     this._countryService.getJSON().subscribe((data) => {
       this.dialingCode = data;
+    });
+  }
+
+  async getBranches() {
+    await this.supabase.branches().then((data) => {
+      console.log(data);
+      this.branches = data;
+    });
+  }
+
+  async getStructures() {
+    await this.supabase.structures().then((data) => {
+      console.log(data);
+      this.structures = data;
     });
   }
 

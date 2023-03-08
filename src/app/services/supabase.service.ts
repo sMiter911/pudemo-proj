@@ -65,6 +65,14 @@ export class SupabaseService {
       .single();
   }
 
+  structures() {
+    return this.supabase.from('structures').select(`id, structure`);
+  }
+
+  branches() {
+    return this.supabase.from('branches').select(`branch, branch_structure`);
+  }
+
   authChanges(
     callback: (event: AuthChangeEvent, session: Session | null) => void
   ) {
