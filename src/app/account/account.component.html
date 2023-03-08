@@ -1,0 +1,389 @@
+<!-- <app-header></app-header> -->
+<form
+  [formGroup]="updateProfileForm"
+  (ngSubmit)="updateProfile()"
+  class="form-widget"
+>
+  <div class="hidden sm:block" aria-hidden="true">
+    <div class="py-5">
+      <div class="border-t border-gray-200"></div>
+    </div>
+  </div>
+
+  <div class="mt-10 sm:mt-0">
+    <div class="md:grid md:grid-cols-3 md:gap-6">
+      <div class="md:col-span-1">
+        <div class="px-4 sm:px-0" style="margin-left: 150px">
+          <h3 class="text-base font-semibold leading-6 text-gray-900">
+            Personal Information
+          </h3>
+          <p class="mt-1 text-sm text-gray-600">
+            Use a permanent address where you can receive mail.
+          </p>
+          <p class="mt-1 text-sm text-gray-600">
+            <span class="font-semibold">Member No.</span>
+            {{ profile.membershipNumber }}
+          </p>
+        </div>
+      </div>
+      <div class="mt-5 md:col-span-2 md:mt-0">
+        <div class="overflow-hidden shadow sm:rounded-md">
+          <div class="bg-white px-4 py-5 sm:p-6">
+            <div class="grid grid-cols-6 gap-6">
+              <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                <label
+                  for="title"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Title</label
+                >
+                <select
+                  formControlName="title"
+                  id="title"
+                  name="title"
+                  class="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                >
+                  <option>Mr</option>
+                  <option>Ms</option>
+                  <option>Mrs</option>
+                  <option>Dr</option>
+                  <option>Prof.</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+              <div class="col-span-6 sm:col-span-3">
+                <label
+                  for="first-name"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >First name</label
+                >
+                <input
+                  type="text"
+                  name="first-name"
+                  id="first-name"
+                  autocomplete="given-name"
+                  formControlName="firstName"
+                  class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+
+              <div class="col-span-6 sm:col-span-3">
+                <label
+                  for="last-name"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Last name</label
+                >
+                <input
+                  type="text"
+                  name="last-name"
+                  id="last-name"
+                  autocomplete="family-name"
+                  formControlName="lastName"
+                  class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+
+              <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                <label
+                  for="gender"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Gender</label
+                >
+                <select
+                  id="gender"
+                  name="gender"
+                  formControlName="gender"
+                  class="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                >
+                  <option>Male</option>
+                  <option>Female</option>
+                  <option>Prefer not to say</option>
+                </select>
+              </div>
+
+              <div class="col-span-6 sm:col-span-3">
+                <label
+                  for="id-number"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >ID Number</label
+                >
+                <input
+                  type="text"
+                  name="id-number"
+                  id="id-number"
+                  formControlName="identityNumber"
+                  class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+
+              <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                <label
+                  for="dateofbirth"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Date of Birth</label
+                >
+                <input
+                  type="date"
+                  name="dateofbirth"
+                  id="dateofbirth"
+                  autocomplete="address-level2"
+                  formControlName="dateOfBirth"
+                  class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+
+              <div class="col-span-6 sm:col-span-3">
+                <label
+                  for="email-address"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Email address</label
+                >
+                <input
+                  type="text"
+                  name="email-address"
+                  id="email-address"
+                  autocomplete="email"
+                  [value]="session.user.email"
+                  disabled
+                  class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+
+              <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                <label
+                  for="phone-number"
+                  class="block text-sm font-semibold leading-6 text-gray-900"
+                  >Phone number</label
+                >
+                <input
+                  type="tel"
+                  name="phone-number"
+                  id="phone-number"
+                  autocomplete="tel"
+                  formControlName="contactNumber"
+                  class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+
+              <div class="col-span-6 sm:col-span-3">
+                <label
+                  for="country"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Nationality by Birth</label
+                >
+                <select
+                  id="country"
+                  name="country"
+                  autocomplete="country-name"
+                  (change)="changeCountry($event)"
+                  formControlName="countryName"
+                  class="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                >
+                  <option value="">Choose a Country</option>
+                  <option
+                    *ngFor="let country of countries"
+                    [ngValue]="country.name"
+                  >
+                    {{ country.name }}
+                  </option>
+                </select>
+              </div>
+              <br />
+              <div class="col-span-6 sm:col-span-3">
+                <label
+                  for="street-address"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Street address</label
+                >
+                <input
+                  type="text"
+                  name="street-address"
+                  id="street-address"
+                  autocomplete="street-address"
+                  formControlName="streetAddress"
+                  class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+
+              <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                <label
+                  for="city"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >City</label
+                >
+                <input
+                  type="text"
+                  name="city"
+                  id="city"
+                  autocomplete="address-level2"
+                  formControlName="city"
+                  class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+
+              <div class="col-span-6 sm:col-span-3">
+                <label
+                  for="region"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >State / Province / Home Area</label
+                >
+                <input
+                  type="text"
+                  name="region"
+                  id="region"
+                  autocomplete="address-level1"
+                  formControlName="homeArea"
+                  class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+
+              <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                <label
+                  for="postal-code"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >ZIP / Postal code</label
+                >
+                <input
+                  type="text"
+                  name="postal-code"
+                  id="postal-code"
+                  autocomplete="postal-code"
+                  formControlName="postalCode"
+                  class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+
+              <div class="col-span-6 sm:col-span-3">
+                <label
+                  for="country"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Branch Location</label
+                >
+                <select
+                  id="branchLocation"
+                  (change)="changeBranch($event)"
+                  name="branchLocation"
+                  autocomplete="branchLocation"
+                  class="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                >
+                  <option>Internal</option>
+                  <option>External</option>
+                  <option>PUDEMO Women's League</option>
+                  <option>SWAYOCO</option>
+                </select>
+              </div>
+
+              <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                <label
+                  for="region"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Branch Location</label
+                >
+                <input
+                  type="text"
+                  name="branch"
+                  id="branch"
+                  autocomplete="branch"
+                  formControlName="branchLocation"
+                  class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+
+              <div class="mt-5 md:col-span-2 md:mt-0">
+                <fieldset>
+                  <legend
+                    class="contents text-sm font-semibold leading-6 text-gray-900"
+                  >
+                    Are you Employed?
+                  </legend>
+                  <p class="text-sm text-gray-500">
+                    Please state your employment status
+                  </p>
+                  <div class="mt-4 space-y-4">
+                    <div class="flex items-center">
+                      <input
+                        id="yes"
+                        type="radio"
+                        value="Yes"
+                        name="employement"
+                        formControlName="employment"
+                        (change)="changeEmployment($event)"
+                        class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                      />
+                      <label
+                        for="yes"
+                        class="ml-3 block text-sm font-medium leading-6 text-gray-900"
+                        >Yes</label
+                      >
+                    </div>
+                    <div class="flex items-center">
+                      <input
+                        id="no"
+                        type="radio"
+                        value="No"
+                        name="employement"
+                        formControlName="employment"
+                        (change)="changeEmployment($event)"
+                        class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                      />
+                      <label
+                        for="no"
+                        class="ml-3 block text-sm font-medium leading-6 text-gray-900"
+                        >No</label
+                      >
+                    </div>
+
+                    <div
+                      class="col-span-6 sm:col-span-3"
+                      *ngIf="updateProfileForm.value.employment == 'Yes'"
+                    >
+                      <label
+                        for="company-name"
+                        class="block text-sm font-medium leading-6 text-gray-900"
+                        >Company name</label
+                      >
+                      <input
+                        type="text"
+                        name="company-name"
+                        id="company-name"
+                        autocomplete="company-name"
+                        formControlName="companyName"
+                        class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+          </div>
+          <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
+            <div>
+              <label class="block text-sm font-medium leading-6 text-gray-900"
+                >Photo</label
+              >
+            </div>
+            <app-avatar
+              [avatarUrl]="this.avatarUrl"
+              (upload)="updateAvatar($event)"
+            >
+            </app-avatar>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 text-right sm:px-6 space-x-4">
+            <button
+              type="submit"
+              class="inline-flex justify-center rounded-md bg-green-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            >
+              Save
+            </button>
+            <button
+              class="inline-flex justify-center rounded-md bg-red-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+              (click)="signOut()"
+            >
+              Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
