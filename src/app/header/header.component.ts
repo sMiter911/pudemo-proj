@@ -33,4 +33,8 @@ export class HeaderComponent {
       this.router.navigate(['/login']);
     });
   }
+
+  public signIn(): void {
+    this.router.navigate(['/login']);
+  }
 }
