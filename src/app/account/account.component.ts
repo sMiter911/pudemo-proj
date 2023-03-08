@@ -43,7 +43,7 @@ export class AccountComponent implements OnInit {
     streetAddress: ['', [Validators.required]],
     city: ['', [Validators.required]],
     homeArea: ['', [Validators.required]],
-    postalCode: ['', [Validators.required]],
+    postalCode: [''],
     branchLocation: ['', [Validators.required]],
     branch: ['', [Validators.required]],
     employment: ['', [Validators.required]],
