@@ -231,10 +231,25 @@ export class AccountComponent implements OnInit {
   }
 
   async getStructures() {
-    await this.supabase.structures().then((data) => {
-      console.log(data);
-      this.structures = data;
-    });
+    try {
+      let {
+        data: structures,
+        error,
+        status,
+      } = await this.supabase.structures();
+
+      if (error && status !== 406) {
+        throw error;
+      }
+
+      if (structures) {
+        this.structures = structures;
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    }
   }
 
   changeCountry(e: any) {
