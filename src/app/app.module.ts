@@ -11,6 +11,7 @@ import { AccountComponent } from './account/account.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { AccountDetailsComponent } from './account-details/account-details.component';
 import { HomeComponent } from './home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { HomeComponent } from './home/home.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

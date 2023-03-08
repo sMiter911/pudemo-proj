@@ -3,6 +3,29 @@
     class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
     aria-label="Global"
   >
+    <div class="-mr-2 -my-2 md:hidden">
+      <button
+        type="button"
+        (click)="toggleMobileMenu()"
+        class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+      >
+        <svg
+          class="h-6 w-6"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+    </div>
     <div class="flex lg:flex-1">
       <a href="#" class="-m-1.5 p-1.5">
         <span class="sr-only">Your Company</span>
@@ -13,63 +36,71 @@
         />
       </a>
     </div>
-    <div class="flex lg:hidden">
-      <button
-        type="button"
-        class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+    <div
+      [@openClose]="openCloseTrigger"
+      class="absolute z-30 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+    >
+      <div
+        class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50"
       >
-        <span class="sr-only">Open main menu</span>
-        <svg
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-          />
-        </svg>
-      </button>
-    </div>
-    <div class="hidden lg:flex lg:gap-x-12">
-      <a
-        href="#"
-        class="text-sm font-semibold leading-6 text-gray-900"
-        routerLink="/profile"
-        *ngIf="isAuthenticated()"
-        >Profile</a
-      >
-      <a
-        href="#"
-        class="text-sm font-semibold leading-6 text-gray-900"
-        routerLink="/edit-profile"
-        *ngIf="isAuthenticated()"
-        >Edit Profile</a
-      >
-    </div>
-    <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-      <a
-        href="#"
-        class="text-sm font-semibold leading-6 text-gray-900"
-        routerLink=""
-        (click)="signOut()"
-        *ngIf="isAuthenticated()"
-        >Log out <span aria-hidden="true">&rarr;</span></a
-      >
-    </div>
-    <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-      <a
-        href="#"
-        class="text-sm font-semibold leading-6 text-gray-900"
-        routerLink=""
-        (click)="signIn()"
-        *ngIf="!isAuthenticated()"
-        >Log In <span aria-hidden="true">&rarr;</span></a
-      >
+        <div class="flex items-center justify-between">
+          <button
+            (click)="toggleMobileMenu()"
+            type="button"
+            class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+          >
+            <svg
+              class="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="py-6 px-5">
+          <div class="grid gap-4">
+            <a
+              href="#"
+              class="text-sm font-semibold leading-6 text-gray-900"
+              routerLink="/profile"
+              *ngIf="isAuthenticated()"
+              >Profile</a
+            >
+            <a
+              href="#"
+              class="text-sm font-semibold leading-6 text-gray-900"
+              routerLink="/edit-profile"
+              *ngIf="isAuthenticated()"
+              >Edit Profile</a
+            >
+            <a
+              href="#"
+              class="text-sm font-semibold leading-6 text-gray-900"
+              routerLink=""
+              (click)="signOut()"
+              *ngIf="isAuthenticated()"
+              >Log out <span aria-hidden="true">&rarr;</span></a
+            >
+            <a
+              href="#"
+              class="text-sm font-semibold leading-6 text-gray-900"
+              routerLink=""
+              (click)="signIn()"
+              *ngIf="!isAuthenticated()"
+              >Log In <span aria-hidden="true">&rarr;</span></a
+            >
+          </div>
+        </div>
+      </div>
     </div>
   </nav>
 </header>
