@@ -231,26 +231,9 @@ export class AccountComponent implements OnInit {
   }
 
   async getStructures() {
-    try {
-      const { user } = this.session;
-      let {
-        data: structures,
-        error,
-        status,
-      } = await this.supabase.structures(user);
-
-      if (error && status !== 406) {
-        throw error;
-      }
-
-      if (structures) {
-        this.structures = structures;
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
-    }
+    await this.supabase.structures().then((data) => {
+      this.structures = data;
+    });
   }
 
   changeCountry(e: any) {

@@ -65,12 +65,11 @@ export class SupabaseService {
       .single();
   }
 
-  structures(user: User) {
-    return this.supabase
+  async structures() {
+    let { data: structures, error } = await this.supabase
       .from('structures')
-      .select(`id, structure`)
-      .eq('id', user.id)
-      .single();
+      .select(`id, structure`);
+    return { structures, error };
   }
 
   branches() {
