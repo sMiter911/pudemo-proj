@@ -3,6 +3,53 @@
     class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
     aria-label="Global"
   >
+    <div class="hidden lg:flex flex lg:flex-1">
+      <a href="#" class="-m-1.5 p-1.5">
+        <span class="sr-only">Your Company</span>
+        <img
+          class="h-8 w-auto"
+          src="../../assets/cropped-black_color_trans-200x29.png"
+          alt=""
+        />
+      </a>
+    </div>
+    <div class="hidden lg:flex lg:gap-x-12">
+      <a
+        href="#"
+        class="text-sm font-semibold leading-6 text-gray-900"
+        routerLink="/profile"
+        *ngIf="isAuthenticated()"
+        >Profile</a
+      >
+      <a
+        href="#"
+        class="text-sm font-semibold leading-6 text-gray-900"
+        routerLink="/edit-profile"
+        *ngIf="isAuthenticated()"
+        >Edit Profile</a
+      >
+    </div>
+    <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      <a
+        href="#"
+        class="text-sm font-semibold leading-6 text-gray-900"
+        routerLink=""
+        (click)="signOut()"
+        *ngIf="isAuthenticated()"
+        >Log out <span aria-hidden="true">&rarr;</span></a
+      >
+    </div>
+    <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      <a
+        href="#"
+        class="text-sm font-semibold leading-6 text-gray-900"
+        routerLink=""
+        (click)="signIn()"
+        *ngIf="!isAuthenticated()"
+        >Log In <span aria-hidden="true">&rarr;</span></a
+      >
+    </div>
+    <!-- Mobile responsive section -->
     <div class="-mr-2 -my-2 md:hidden">
       <button
         type="button"
@@ -26,7 +73,7 @@
         </svg>
       </button>
     </div>
-    <div class="flex lg:flex-1">
+    <div class="flex lg:flex-1 md:hidden">
       <a href="#" class="-m-1.5 p-1.5">
         <span class="sr-only">Your Company</span>
         <img
