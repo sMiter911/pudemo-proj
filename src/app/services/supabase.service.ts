@@ -65,8 +65,12 @@ export class SupabaseService {
       .single();
   }
 
-  structures() {
-    return this.supabase.from('structures').select(`id, structure`);
+  structures(user: User) {
+    return this.supabase
+      .from('structures')
+      .select(`id, structure`)
+      .eq('id', user.id)
+      .single();
   }
 
   branches() {

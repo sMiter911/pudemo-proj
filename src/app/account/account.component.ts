@@ -232,11 +232,12 @@ export class AccountComponent implements OnInit {
 
   async getStructures() {
     try {
+      const { user } = this.session;
       let {
         data: structures,
         error,
         status,
-      } = await this.supabase.structures();
+      } = await this.supabase.structures(user);
 
       if (error && status !== 406) {
         throw error;
