@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   AuthChangeEvent,
@@ -7,7 +8,16 @@ import {
   SupabaseClient,
   User,
 } from '@supabase/supabase-js';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    apiKey: `${environment.supabaseKey}`,
+    Authorization: `Bearer ${environment.supabaseKey}`,
+    'Content-Type': 'application/json',
+  }),
+};
 
 export interface Profile {
   id?: string;
@@ -41,7 +51,7 @@ export class SupabaseService {
   private supabase: SupabaseClient;
   _session: AuthSession | null = null;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.supabase = createClient(
       environment.supabaseUrl,
       environment.supabaseKey
@@ -65,11 +75,9 @@ export class SupabaseService {
       .single();
   }
 
-  async structures() {
-    let { data: structures, error } = await this.supabase
-      .from('structures')
-      .select(`id, structure`);
-    return { structures, error };
+  async structures(): Promise<Observable<any>> {
+    const apiUrl = `${environment.supabaseUrl}/rest/v1/structures`;
+    return this.http.get(apiUrl, httpOptions);
   }
 
   branches() {
