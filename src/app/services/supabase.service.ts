@@ -75,7 +75,7 @@ export class SupabaseService {
       .single();
   }
 
-  async structures(): Promise<Observable<any>> {
+  structures(): Observable<any> {
     const apiUrl = `${environment.supabaseUrl}/rest/v1/structures`;
     return this.http.get(apiUrl, httpOptions);
   }

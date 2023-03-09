@@ -231,7 +231,7 @@ export class AccountComponent implements OnInit {
   }
 
   async getStructures() {
-    await this.supabase.structures().then((data) => {
+    await this.supabase.structures().subscribe((data: any) => {
       this.structures = data;
     });
   }
