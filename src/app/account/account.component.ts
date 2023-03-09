@@ -1,18 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthSession } from '@supabase/supabase-js';
-import { CountryServiceService } from '../services/country-service.service';
-import { Profile, SupabaseService } from '../services/supabase.service';
+import { Component, Input, OnInit } from "@angular/core";
+import { FormBuilder, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { AuthSession } from "@supabase/supabase-js";
+import { CountryServiceService } from "../services/country-service.service";
+import { Profile, SupabaseService } from "../services/supabase.service";
 
 export interface Country {
   name: string;
 }
 
 @Component({
-  selector: 'app-account',
-  templateUrl: './account.component.html',
-  styleUrls: ['./account.component.scss'],
+  selector: "app-account",
+  templateUrl: "./account.component.html",
+  styleUrls: ["./account.component.scss"],
 })
 export class AccountComponent implements OnInit {
   loading = false;
@@ -30,27 +30,27 @@ export class AccountComponent implements OnInit {
   session: any;
 
   updateProfileForm = this.formBuilder.group({
-    membershipNumber: '',
-    username: '',
-    website: '',
-    avatar_url: '',
-    countryName: ['', [Validators.required]],
-    contactNumber: ['', [Validators.required]],
-    title: ['', [Validators.required]],
-    firstName: ['', [Validators.required]],
-    lastName: ['', [Validators.required]],
-    gender: ['', [Validators.required]],
-    identityNumber: ['', [Validators.required]],
-    dateOfBirth: ['', [Validators.required]],
-    emailAddress: ['', [Validators.required, Validators.email]],
-    streetAddress: ['', [Validators.required]],
-    city: ['', [Validators.required]],
-    homeArea: ['', [Validators.required]],
-    postalCode: [''],
-    branchLocation: ['', [Validators.required]],
-    branch: ['', [Validators.required]],
-    employment: ['', [Validators.required]],
-    companyName: '',
+    membershipNumber: "",
+    username: "",
+    website: "",
+    avatar_url: "",
+    countryName: ["", [Validators.required]],
+    contactNumber: ["", [Validators.required]],
+    title: ["", [Validators.required]],
+    firstName: ["", [Validators.required]],
+    lastName: ["", [Validators.required]],
+    gender: ["", [Validators.required]],
+    identityNumber: ["", [Validators.required]],
+    dateOfBirth: ["", [Validators.required]],
+    emailAddress: ["", [Validators.required, Validators.email]],
+    streetAddress: ["", [Validators.required]],
+    city: ["", [Validators.required]],
+    homeArea: ["", [Validators.required]],
+    postalCode: [""],
+    branchLocation: ["", [Validators.required]],
+    branch: ["", [Validators.required]],
+    employment: ["", [Validators.required]],
+    companyName: "",
   });
 
   constructor(
@@ -65,7 +65,7 @@ export class AccountComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.supabase.authChanges((_, session) => (this.session = session));
     if (!this.session.user) {
-      this.router.navigate(['/login']);
+      this.router.navigate(["/login"]);
     }
     await this.getProfile();
     await this.getCountries();
@@ -207,7 +207,7 @@ export class AccountComponent implements OnInit {
       }
     } finally {
       this.loading = false;
-      this.router.navigate(['/profile']);
+      this.router.navigate(["/profile"]);
     }
   }
 
@@ -224,8 +224,19 @@ export class AccountComponent implements OnInit {
   }
 
   async getBranches() {
+    await this.supabase.branches().then((data) => {
+      console.log(data);
+      this.branches = data;
+    });
+  }
+
+  async getStructures() {
     try {
-      let { data: structures, error, status } = await this.supabase.structures();
+      let {
+        data: structures,
+        error,
+        status,
+      } = await this.supabase.structures();
 
       if (error && status !== 406) {
         throw error;
@@ -243,12 +254,6 @@ export class AccountComponent implements OnInit {
     }
   }
 
-  async getStructures() {
-    await this.supabase.structures().subscribe((data: any) => {
-      this.structures = data;
-    });
-  }
-
   changeCountry(e: any) {
     this.countryName?.setValue(e.target.value, {
       onlySelf: true,
@@ -256,7 +261,7 @@ export class AccountComponent implements OnInit {
   }
 
   get countryName() {
-    return this.updateProfileForm.get('countryName');
+    return this.updateProfileForm.get("countryName");
   }
 
   changeBranch(e: any) {
@@ -266,7 +271,7 @@ export class AccountComponent implements OnInit {
   }
 
   get branch() {
-    return this.updateProfileForm.get('branch');
+    return this.updateProfileForm.get("branch");
   }
 
   changeEmployment(e: any) {
@@ -276,7 +281,7 @@ export class AccountComponent implements OnInit {
   }
 
   get employment() {
-    return this.updateProfileForm.get('employment');
+    return this.updateProfileForm.get("employment");
   }
 
   onDialingCodeChange(e: any) {
@@ -288,7 +293,7 @@ export class AccountComponent implements OnInit {
   }
 
   get contactNumber() {
-    return this.updateProfileForm.get('contactNumber');
+    return this.updateProfileForm.get("contactNumber");
   }
 
   getCountryDialingCode(countryCode: any) {
@@ -314,8 +319,8 @@ export class AccountComponent implements OnInit {
     // Get today's date
     const today = new Date();
     const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0'); // Add leading zero if necessary
-    const day = String(today.getDate()).padStart(2, '0'); // Add leading zero if necessary
+    const month = String(today.getMonth() + 1).padStart(2, "0"); // Add leading zero if necessary
+    const day = String(today.getDate()).padStart(2, "0"); // Add leading zero if necessary
 
     // Combine the date components into a string in the format of YYYYMMDD
     const date_string = `${year}${month}${day}`;
@@ -328,14 +333,14 @@ export class AccountComponent implements OnInit {
 
     console.log(this.newMember);
 
-    if (this.updateProfileForm.get('membershipNumber')?.value == '') {
-      this.updateProfileForm.get('membershipNumber')?.setValue(this.newMember);
+    if (this.updateProfileForm.get("membershipNumber")?.value == "") {
+      this.updateProfileForm.get("membershipNumber")?.setValue(this.newMember);
     }
   }
 
   public signOut(): void {
     this.supabase.signOut().then(() => {
-      this.router.navigate(['/login']);
+      this.router.navigate(["/login"]);
     });
   }
 }
