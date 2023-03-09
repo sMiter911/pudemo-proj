@@ -249,7 +249,7 @@ export class AccountComponent implements OnInit {
     return this.updateProfileForm.get("countryName");
   }
 
-  changeBranch(e: any) {
+  changeBranchLocation(e: any) {
     this.branch?.setValue(e.target.value, {
       onlySelf: true,
     });
