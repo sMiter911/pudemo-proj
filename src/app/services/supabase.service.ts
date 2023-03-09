@@ -11,14 +11,6 @@ import {
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    apiKey: `${environment.supabaseKey}`,
-    Authorization: `Bearer ${environment.supabaseKey}`,
-    'Content-Type': 'application/json',
-  }),
-};
-
 export interface Profile {
   id?: string;
   username: string;
@@ -76,8 +68,9 @@ export class SupabaseService {
   }
 
   structures(): Observable<any> {
-    const apiUrl = `${environment.supabaseUrl}/rest/v1/structures`;
-    return this.http.get(apiUrl, httpOptions);
+    return this.supabase
+    .from('structures')
+    .select('id, structure')
   }
 
   branches() {

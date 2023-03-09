@@ -224,10 +224,23 @@ export class AccountComponent implements OnInit {
   }
 
   async getBranches() {
-    await this.supabase.branches().then((data) => {
-      console.log(data);
-      this.branches = data;
-    });
+    try {
+      let { data: structures, error, status } = await this.supabase.structures();
+
+      if (error && status !== 406) {
+        throw error;
+      }
+
+      if (structures) {
+        this.structures = structures;
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    } finally {
+      this.loading = false;
+    }
   }
 
   async getStructures() {
