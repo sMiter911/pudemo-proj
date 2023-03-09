@@ -3,6 +3,8 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthSession } from "@supabase/supabase-js";
 import { CountryServiceService } from "../services/country-service.service";
+import { StructuresService } from "../services/structures.service";
+import { BranchesService } from "../services/branches.service";
 import { Profile, SupabaseService } from "../services/supabase.service";
 
 export interface Country {
@@ -57,6 +59,8 @@ export class AccountComponent implements OnInit {
     private readonly supabase: SupabaseService,
     private formBuilder: FormBuilder,
     private _countryService: CountryServiceService,
+    private _structuresService: StructuresService,
+    private _branchesService: BranchesService,
     private router: Router
   ) {
     this.session = this.supabase.session;
@@ -224,34 +228,15 @@ export class AccountComponent implements OnInit {
   }
 
   async getBranches() {
-    await this.supabase.branches().then((data) => {
-      console.log(data);
+    this._branchesService.getJSON().subscribe((data) => {
       this.branches = data;
     });
   }
 
   async getStructures() {
-    try {
-      let {
-        data: structures,
-        error,
-        status,
-      } = await this.supabase.structures();
-
-      if (error && status !== 406) {
-        throw error;
-      }
-
-      if (structures) {
-        this.structures = structures;
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
-    } finally {
-      this.loading = false;
-    }
+    this._structuresService.getJSON().subscribe((data) => {
+      this.structures = data;
+    });
   }
 
   changeCountry(e: any) {
