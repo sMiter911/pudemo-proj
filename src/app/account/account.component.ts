@@ -1,20 +1,20 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { AuthSession } from "@supabase/supabase-js";
-import { CountryServiceService } from "../services/country-service.service";
-import { StructuresService } from "../services/structures.service";
-import { BranchesService } from "../services/branches.service";
-import { Profile, SupabaseService } from "../services/supabase.service";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthSession } from '@supabase/supabase-js';
+import { CountryServiceService } from '../services/country-service.service';
+import { StructuresService } from '../services/structures.service';
+import { BranchesService } from '../services/branches.service';
+import { Profile, SupabaseService } from '../services/supabase.service';
 
 export interface Country {
   name: string;
 }
 
 @Component({
-  selector: "app-account",
-  templateUrl: "./account.component.html",
-  styleUrls: ["./account.component.scss"],
+  selector: 'app-account',
+  templateUrl: './account.component.html',
+  styleUrls: ['./account.component.scss'],
 })
 export class AccountComponent implements OnInit {
   loading = false;
@@ -26,33 +26,35 @@ export class AccountComponent implements OnInit {
   dialingCode: any;
   countryExtension: any;
   newMember: any;
+  branchesByStructure: any;
+  structureBranches: any[] = [];
 
   // @Input()
   // session!: AuthSession;
   session: any;
 
   updateProfileForm = this.formBuilder.group({
-    membershipNumber: "",
-    username: "",
-    website: "",
-    avatar_url: "",
-    countryName: ["", [Validators.required]],
-    contactNumber: ["", [Validators.required]],
-    title: ["", [Validators.required]],
-    firstName: ["", [Validators.required]],
-    lastName: ["", [Validators.required]],
-    gender: ["", [Validators.required]],
-    identityNumber: ["", [Validators.required]],
-    dateOfBirth: ["", [Validators.required]],
-    emailAddress: ["", [Validators.required, Validators.email]],
-    streetAddress: ["", [Validators.required]],
-    city: ["", [Validators.required]],
-    homeArea: ["", [Validators.required]],
-    postalCode: [""],
-    branchLocation: ["", [Validators.required]],
-    branch: ["", [Validators.required]],
-    employment: ["", [Validators.required]],
-    companyName: "",
+    membershipNumber: '',
+    username: '',
+    website: '',
+    avatar_url: '',
+    countryName: ['', [Validators.required]],
+    contactNumber: ['', [Validators.required]],
+    title: ['', [Validators.required]],
+    firstName: ['', [Validators.required]],
+    lastName: ['', [Validators.required]],
+    gender: ['', [Validators.required]],
+    identityNumber: ['', [Validators.required]],
+    dateOfBirth: ['', [Validators.required]],
+    emailAddress: ['', [Validators.required, Validators.email]],
+    streetAddress: ['', [Validators.required]],
+    city: ['', [Validators.required]],
+    homeArea: ['', [Validators.required]],
+    postalCode: [''],
+    branchLocation: ['', [Validators.required]],
+    branch: ['', [Validators.required]],
+    employment: ['', [Validators.required]],
+    companyName: '',
   });
 
   constructor(
@@ -69,7 +71,7 @@ export class AccountComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.supabase.authChanges((_, session) => (this.session = session));
     if (!this.session.user) {
-      this.router.navigate(["/login"]);
+      this.router.navigate(['/login']);
     }
     await this.getProfile();
     await this.getCountries();
@@ -211,7 +213,7 @@ export class AccountComponent implements OnInit {
       }
     } finally {
       this.loading = false;
-      this.router.navigate(["/profile"]);
+      this.router.navigate(['/profile']);
     }
   }
 
@@ -246,17 +248,47 @@ export class AccountComponent implements OnInit {
   }
 
   get countryName() {
-    return this.updateProfileForm.get("countryName");
+    return this.updateProfileForm.get('countryName');
   }
 
   changeBranchLocation(e: any) {
+    if (e.target.value === "SWAYOCO" || e.target.value === "PUDEMO Womens League" || e.target.value === "Veterans League") {
+      this.updateProfileForm.patchValue({
+        branchLocation: ''
+      })
+    }
     this.branch?.setValue(e.target.value, {
+      onlySelf: true,
+    });
+    this.getBranchesByStructure(this.branch?.value);
+  }
+
+  get branch() {
+    return this.updateProfileForm.get('branch');
+  }
+
+  changeBranch(e: any) {
+    this.branchLocation?.setValue(e.target.value, {
       onlySelf: true,
     });
   }
 
-  get branch() {
-    return this.updateProfileForm.get("branch");
+  get branchLocation() {
+    return this.updateProfileForm.get('branchLocation');
+  }
+
+  getBranchesByStructure(structure: any) {
+    this.structureBranches = [];
+    this.structures.forEach((item: any) => {
+      if (item.structure === structure) {
+        this.branchesByStructure = item;
+        for (const element of this.branches) {
+          if (element.branch_structure === this.branchesByStructure.id) {
+            this.structureBranches.push(element);
+          }
+        }
+      }
+    });
   }
 
   changeEmployment(e: any) {
@@ -266,7 +298,7 @@ export class AccountComponent implements OnInit {
   }
 
   get employment() {
-    return this.updateProfileForm.get("employment");
+    return this.updateProfileForm.get('employment');
   }
 
   onDialingCodeChange(e: any) {
@@ -278,7 +310,7 @@ export class AccountComponent implements OnInit {
   }
 
   get contactNumber() {
-    return this.updateProfileForm.get("contactNumber");
+    return this.updateProfileForm.get('contactNumber');
   }
 
   getCountryDialingCode(countryCode: any) {
@@ -304,8 +336,8 @@ export class AccountComponent implements OnInit {
     // Get today's date
     const today = new Date();
     const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0"); // Add leading zero if necessary
-    const day = String(today.getDate()).padStart(2, "0"); // Add leading zero if necessary
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Add leading zero if necessary
+    const day = String(today.getDate()).padStart(2, '0'); // Add leading zero if necessary
 
     // Combine the date components into a string in the format of YYYYMMDD
     const date_string = `${year}${month}${day}`;
@@ -318,14 +350,14 @@ export class AccountComponent implements OnInit {
 
     console.log(this.newMember);
 
-    if (this.updateProfileForm.get("membershipNumber")?.value == "") {
-      this.updateProfileForm.get("membershipNumber")?.setValue(this.newMember);
+    if (this.updateProfileForm.get('membershipNumber')?.value == '') {
+      this.updateProfileForm.get('membershipNumber')?.setValue(this.newMember);
     }
   }
 
   public signOut(): void {
     this.supabase.signOut().then(() => {
-      this.router.navigate(["/login"]);
+      this.router.navigate(['/login']);
     });
   }
 }
