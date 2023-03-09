@@ -67,7 +67,7 @@ export class SupabaseService {
       .single();
   }
 
-  structures(): Observable<any> {
+  structures() {
     return this.supabase
     .from('structures')
     .select('id, structure')
