@@ -252,10 +252,14 @@ export class AccountComponent implements OnInit {
   }
 
   changeBranchLocation(e: any) {
-    if (e.target.value === "SWAYOCO" || e.target.value === "PUDEMO Womens League" || e.target.value === "Veterans League") {
+    if (
+      e.target.value === 'SWAYOCO' ||
+      e.target.value === 'PUDEMO Womens League' ||
+      e.target.value === 'Veterans League'
+    ) {
       this.updateProfileForm.patchValue({
-        branchLocation: ''
-      })
+        branchLocation: '',
+      });
     }
     this.branch?.setValue(e.target.value, {
       onlySelf: true,
