@@ -78,7 +78,9 @@ export class AccountComponent implements OnInit {
     await this.getBranches();
     await this.getStructures();
     await this.getDialingCode();
-    await this.createMembershipNumber();
+    if (this.profile.membershipNumber === null) {
+      await this.createMembershipNumber();
+    }
 
     const {
       username,
@@ -373,14 +375,9 @@ export class AccountComponent implements OnInit {
 
     console.log(this.newMember);
 
-    if (
-      this.updateProfileForm.get('membershipNumber')?.value == '' ||
-      this.profile.membershipNumber == null
-    ) {
-      this.updateProfileForm.patchValue({
-        membershipNumber: this.newMember,
-      });
-    }
+    this.updateProfileForm.patchValue({
+      membershipNumber: this.newMember,
+    });
   }
 
   public signOut(): void {
