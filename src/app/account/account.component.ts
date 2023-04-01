@@ -375,10 +375,10 @@ export class AccountComponent implements OnInit {
 
     console.log(this.newMember);
 
-    this.updateProfileForm.patchValue({
-      membershipNumber: this.newMember,
-    });
-    await this.updateProfile();
+    this.updateProfileForm.controls['membershipNumber'].setValue(
+      this.newMember
+    );
+    console.log(this.updateProfileForm.value);
   }
 
   public signOut(): void {
