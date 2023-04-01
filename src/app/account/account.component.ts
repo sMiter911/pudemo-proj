@@ -78,9 +78,9 @@ export class AccountComponent implements OnInit {
     await this.getBranches();
     await this.getStructures();
     await this.getDialingCode();
-    if (this.profile.membershipNumber === null) {
-      await this.createMembershipNumber();
-    }
+    // if (this.profile.membershipNumber === null) {
+    //   await this.createMembershipNumber();
+    // }
 
     const {
       username,
