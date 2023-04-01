@@ -352,9 +352,31 @@ export class AccountComponent implements OnInit {
     // Combine the date string and random number to create the membership number
     this.newMember = `${date_string}-${random_number}`;
 
+    const brConcat = this.profile.branchLocation.toUpperCase();
+    const len = brConcat?.length;
+    const firstChar = brConcat?.charAt(0);
+    const middleIndex = Math.floor(len / 2);
+    const middleChar =
+      len % 2 === 0
+        ? brConcat.substring(middleIndex - 1, middleIndex + 1)
+        : brConcat[middleIndex];
+    const lastChar = brConcat?.charAt(brConcat.length - 1);
+
+    if (this.profile.branch === 'External Region') {
+      this.newMember = `EXT-${firstChar}${middleChar}${lastChar}-${date_string}-${random_number}`;
+    } else if (
+      this.profile.branch !== null &&
+      this.profile.branch !== 'External Region'
+    ) {
+      this.newMember = `INT-${firstChar}${middleChar}${lastChar}-${date_string}-${random_number}`;
+    }
+
     console.log(this.newMember);
 
-    if (this.updateProfileForm.get('membershipNumber')?.value == '') {
+    if (
+      this.updateProfileForm.get('membershipNumber')?.value == '' ||
+      this.profile.membershipNumber == null
+    ) {
       this.updateProfileForm.get('membershipNumber')?.setValue(this.newMember);
     }
   }
