@@ -56,11 +56,16 @@ export class AccountDetailsComponent implements OnInit {
   }
 
   getDate() {
-    let date = this.profile.membershipNumber.split('-')[0];
-    const year = date.slice(0, 4);
-    const month = date.slice(4, 6) - 1;
-    const day = date.slice(6, 8);
-    this.memberInitiationDate = new Date(year, month, day);
+    let memberDate = this.profile.membershipNumber;
+    const pattern = /[^-]*-[^-]*-(\d{8})-.*/;
+    const match = memberDate.match(pattern);
+    if (match) {
+      const dateStr = match[1];
+      const year = dateStr.slice(0, 4);
+      const month = dateStr.slice(4, 6);
+      const day = dateStr.slice(6, 8);
+      this.memberInitiationDate = new Date(year, month - 1, day);
+    }
   }
 
   public signOut(): void {
