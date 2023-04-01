@@ -79,6 +79,7 @@ export class AccountComponent implements OnInit {
     await this.getStructures();
     await this.getDialingCode();
     if (this.profile.membershipNumber === null) {
+      console.log(this.profile.membershipNumber);
       await this.createMembershipNumber();
     }
 
