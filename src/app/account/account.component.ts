@@ -377,7 +377,9 @@ export class AccountComponent implements OnInit {
       this.updateProfileForm.get('membershipNumber')?.value == '' ||
       this.profile.membershipNumber == null
     ) {
-      this.updateProfileForm.get('membershipNumber')?.setValue(this.newMember);
+      this.updateProfileForm
+        .get('membershipNumber')
+        ?.patchValue(this.newMember);
     }
   }
 
