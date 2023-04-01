@@ -79,7 +79,6 @@ export class AccountComponent implements OnInit {
     await this.getStructures();
     await this.getDialingCode();
     if (this.profile.membershipNumber === null) {
-      console.log(this.profile.membershipNumber);
       await this.createMembershipNumber();
     }
 
@@ -379,6 +378,7 @@ export class AccountComponent implements OnInit {
     this.updateProfileForm.patchValue({
       membershipNumber: this.newMember,
     });
+    await this.updateProfile();
   }
 
   public signOut(): void {
