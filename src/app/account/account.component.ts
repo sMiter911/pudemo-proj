@@ -179,8 +179,7 @@ export class AccountComponent implements OnInit {
       const branchLocation = this.updateProfileForm.value
         .branchLocation as string;
       const branch = this.updateProfileForm.value.branch as string;
-      const membershipNumber = this.updateProfileForm.value
-        .membershipNumber as string;
+      const membershipNumber = this.newMember as string;
       const employment = this.updateProfileForm.value.employment as string;
       const companyName = this.updateProfileForm.value.companyName as string;
 
